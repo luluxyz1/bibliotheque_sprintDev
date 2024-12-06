@@ -1,0 +1,127 @@
+Application de Gestion de Bibliothèques
+
+Expression de Besoin :
+
+    Contexte :  Dans le cadre de notre activité professionnelle, nous avons besoin d'un outil en ligne pour gérer les livres et les emprunts de notre bibliothèque. 
+                Actuellement, nous utilisons des méthodes manuelles et des registres papier, ce qui est inefficace et sujet à des erreurs.
+    
+    Objectif :  Développer une application web de gestion de bibliothèque qui permet de centraliser, organiser et suivre les livres et les emprunts. 
+                Cette application doit faciliter la gestion des ressources, améliorer la communication entre les bibliothécaires et les utilisateurs, et réduire les erreurs.
+    
+    
+    Fonctionnalités Principales :
+        1.	Création et Gestion des Livres :
+            •	Ajouter, modifier et supprimer des livres.
+            •	Définir des catégories et des auteurs pour chaque livre.
+            •	Suivre l'état des livres (disponible, emprunté, réservé).
+        2.	Gestion des Emprunts :
+            •	Enregistrer les emprunts et les retours de livres.
+            •	Définir des dates d'échéance pour les emprunts.
+            •	Envoyer des notifications aux utilisateurs pour les rappels d'échéance.
+        3.	Suivi des Utilisateurs :
+            •	Créer des comptes utilisateurs.
+            •	Suivre les emprunts et les retours pour chaque utilisateur.
+            •	Gérer les inscriptions et les désinscriptions des utilisateurs.
+        4.	Recherche et Filtres :
+            •	Rechercher des livres par titre, auteur, catégorie, etc.
+            •	Appliquer des filtres pour affiner les résultats de recherche.
+        5.	Réservations :
+            •	Permettre aux utilisateurs de réserver des livres indisponibles.
+            •	Notifier les utilisateurs lorsqu'un livre réservé est disponible.
+        6.	Sécurité et Accès :
+            •	Authentification des utilisateurs avec des identifiants sécurisés.
+            •	Contrôle des accès basé sur les rôles (administrateur, bibliothécaire, utilisateur).
+    
+    Technologies :
+        •	Serveur : PHP
+        •	Base de Données : MySQL
+        •	Interface Utilisateur : HTML, CSS, JavaScript
+        •	Outils : Bootstrap pour le design responsive, jQuery pour les interactions dynamiques
+        Conclusion : L'application web de gestion de bibliothèque que nous souhaitons développer doit être intuitive, facile à utiliser et sécurisée. Elle doit permettre à notre équipe de mieux organiser les ressources, de suivre les emprunts et les retours, et de collaborer efficacement. Nous espérons que cette application nous aidera à améliorer notre gestion des ressources et à offrir un meilleur service à nos utilisateurs.
+    
+    
+    
+    DB :
+
+    (faire une liste d'attente pour les livres ?)
+
+    - Livres
+        - id_livre
+        - nom_livre
+        - genre_livre
+        - auteur_livre
+        - annee_livre    
+        - quantite_livre (seulement 1 livre ?)
+        - etat_livre
+            - si disponible, n'importe qui peut le récupérer
+                - date limite pour le récupérer, au delà de cette date, le livre redevient disponible. 
+            - si emprunté, l'utilisateur qui l'a emprunté possède une date limite pour le rendre, les autres utilisateurs doivent demander la réservation 
+                - bibliothécaire doit activer la date de début et de fin de réservation
+                    - rappels d'échéance : 1 jour avant, une semaine avant, 12 heures avant, etc...
+                - dès que le livre est rendu par l'utilisateur 1
+                    - il devient disponible pour tous à récupérer 
+                    - notification pour tous les utilisateurs ayant demandé d'être notifié dès qu'il devient disponible (mail envoyé)
+            - si réservé (par l'utilisateur, les autres verront que le livre est indisponible)
+                - l'utilisateur à une date limite pour venir le récupérer
+                - au delà de cette date, le livre redevient disponible pour tous
+
+
+    - Utilisateurs
+        - id_user
+        - nom_user
+        - prenom_user
+        - adresse_user
+        - telephone_user
+        - livre_emprunt 
+            - peut être nul si aucun emprunt
+            - si emprunt, faire passer id_livre, titre_livre, auteur_livre, annee_livre
+
+        - email_user
+        - mdp_user
+        - role_user (client, bibliothecaire, admin)
+            - a l'inscription, automatiquement client, l'admin doit changer lui même le rôle pour un bibliothecaire ou un nouvel admin
+            - a la connexion, le site verifie le role de l'user et le redirige vers la page adequate 
+
+                - client 
+                    - site complet avec présentation des livres, bouton pour réserver, etc...
+                    - a l'inscription, le bibliothecaire doit accepter la demande pour accéder à la réservation d'un livre
+                    
+                - bibliothecaire 
+                    - liste des livres disponibles, indisponibles, réservés (avec nom du client et date d'échéance)
+                    - rechercher un client afin de vérifier les livres réservés
+                    - rechercher un livre afin de vérifier qui l'a emprunté
+                    - peut accepter ou refuser les demandes d'inscriptions des clients
+                    - peut ajouter ET SEULEMENT ajouter un CLIENT à la base de données
+
+                - admin
+                    - goat monstrueux qui peut faire tout ce que fait le bibliothecaire
+                        - liste des livres disponibles, indisponibles, réservés (avec nom du client et date d'échéance)
+                            - peut ajouter, modifier, supprimer un livre
+                        - rechercher un client afin de vérifier les livres réservés
+                        - rechercher un livre afin de vérifier qui l'a emprunté
+                    - liste des livres, peut ajouter, modifier, supprimer un livre
+                    - liste des USERS, peut ajouter, modifier, supprimer un user
+                    - il peut tout faire ce monstre 
+
+
+----------------- ? -----------------
+
+    - Utilisateurs
+        
+
+
+
+
+
+
+
+CREATE DATABASE bibliotheque_sprintdev;
+
+CREATE TABLE livre (
+  	id_livre INT(10) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  	nom_livre VARCHAR(255),
+  	genre_livre VARCHAR(255),
+    auteur_livre VARCHAR(255),
+    annee_livre INT(10),
+    etat_livre VARCHAR(255)
+);
