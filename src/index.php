@@ -1,10 +1,27 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+
+try {
+  $conn = new mysqli($servername, $username, $password);
+  echo "Connected successfully";
+} catch (Exception $e) {
+  echo "Connection failed: " . $e->getMessage();
+}
+?>
+
+
+
 <!doctype html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="./output.css" rel="stylesheet">
 </head>
+
 <body class=" flex-col justify-center items-center">
   <!-- Titre page -->
   <div class="py-5">
@@ -19,7 +36,7 @@
         Ajout des livres
       </h1>
     </div>
-    
+
     <div class="flex justify-center items-end w-full h-full ">
       <div class="flex items-center px-8 justify-center w-full  ">
         <div class="flex-col">
@@ -33,11 +50,12 @@
             Modifier un livre
           </button>
         </div>
-        
+
       </div>
-  </div>
-  
+    </div>
+
   </div>
 
 </body>
+
 </html>
