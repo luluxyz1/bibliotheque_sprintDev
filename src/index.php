@@ -1,17 +1,14 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
+session_start();
 
-try {
-  $conn = new mysqli($servername, $username, $password);
-  echo "Connected successfully";
-} catch (Exception $e) {
-  echo "Connection failed: " . $e->getMessage();
-}
+
+require_once('includes/dbh.inc.php');
+
+$query_products = "SELECT id_livre, nom_livre, auteur_livre, annee_livre, tome_livre, genre_livre, etat_livre FROM livre";
+$stmt_products = $pdo->query($query_products);
+$products = $stmt_products->fetchAll();
+
 ?>
-
-
 
 <!doctype html>
 <html>
@@ -54,6 +51,32 @@ try {
       </div>
     </div>
 
+  </div>
+  <!-- Liste des livres -->
+  <div>
+    <p> Liste des livres : </p>
+    <table class="flex  justify-center">
+      <tr class="mx-4  justify-center bg-red-600">
+        <th>Id</th>
+        <th>Titre</th>
+        <th>Auteur</th>
+        <th>Année</th>
+        <th>Tome</th>
+        <th>Genre</th>
+        <th>Etat</th>
+      </tr>
+      <?php foreach ($products as $product) : ?>
+        <tr class="mx-4 px-16 bg-black">
+          <td><?= $product['id_livre'] ?></td>
+          <td><?= $product['nom_livre'] ?></td>
+          <td><?= $product['auteur_livre'] ?></td>
+          <td><?= $product['annee_livre'] ?></td>
+          <td><?= $product['tome_livre'] ?></td>
+          <td><?= $product['genre_livre'] ?></td>
+          <td><?= $product['etat_livre'] ?></td>
+        </tr>
+      <?php endforeach; ?>
+    </table>
   </div>
 
 </body>
