@@ -2,13 +2,6 @@
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $id = $_POST["id_livre"];
-    $titre = $_POST["nom_livre"];
-    $auteur = $_POST["auteur_livre"];
-    $annee = $_POST["annee_livre"];
-    $tome = $_POST["tome_livre"];
-    $genre = $_POST["genre_livre"];
-    $etat = $_POST["etat_livre"];
 
     try {
 

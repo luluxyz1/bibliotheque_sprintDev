@@ -17,16 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-        $query = "UPDATE livre SET nom_livre = :nom_livre, auteur_livre = :auteur_livre, annee_livre = :annee_livre, tome_livre = :tome_livre, genre_livre = :genre_livre, etat_livre = :etat_livre WHERE id_livre = :id_livre";
+        $query = "UPDATE livre SET nom_livre = ?, auteur_livre = ?, annee_livre = ?, tome_livre = ?, genre_livre = ?, etat_livre = ? WHERE id_livre = ?";
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':nom_livre', $titre);
-        $stmt->bindParam(':auteur_livre', $auteur);
-        $stmt->bindParam(':annee_livre', $annee);
-        $stmt->bindParam(':tome_livre', $tome);
-        $stmt->bindParam(':genre_livre', $genre);
-        $stmt->bindParam(':etat_livre', $etat);
-        $stmt->bindParam(':id_livre', $id);
-        $stmt->execute();
+        $stmt->execute([$titre, $auteur, $annee, $tome, $genre, $etat, $id]);
+
+
         $pdo = null;
         $stmt = null;
 

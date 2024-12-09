@@ -1,8 +1,10 @@
 <?php
 session_start();
 
-
 require_once('includes/dbh.inc.php');
+
+
+
 
 $query_products = "SELECT id_livre, nom_livre, auteur_livre, annee_livre, tome_livre, genre_livre, etat_livre FROM livre";
 $stmt_products = $pdo->query($query_products);
@@ -34,7 +36,7 @@ $genres = array_unique($genres);
 
   <div class="flex-col flex justify-center items-center">
     <h1 class="text-4xl"> Bibliothèque </h1><br>
-    <a href="logout.php" class="border-black border-2 m-1 hover:bg-black transition:2s hover:text-white animate-fade">Déconnexion</a>
+    <a href="includes/logout.inc.php" class="border-black border-2 m-1 hover:bg-black transition:2s hover:text-white animate-fade">Déconnexion</a>
     <h1 class="text-2xl"> Ajouter un livre </h1>
   </div>
 
@@ -78,22 +80,23 @@ $genres = array_unique($genres);
         <?php foreach ($products as $product) : ?>
           <tr>
             <form action="includes/update_book.inc.php" method="post">
-              <td><input class="border-2 BORDER-black" type="text" name="id_livre" value="<?= $product["id_livre"] ?>"></td>
+              <td><input class="border-2 BORDER-black" type="text" name="id_livre" value="<?= $product["id_livre"] ?>" disabled></td>
               <td><input class="border-2 BORDER-black" type="text" name="nom_livre" value="<?= $product["nom_livre"] ?>"></td>
               <td><input class="border-2 BORDER-black" type="text" name="auteur_livre" value="<?= $product["auteur_livre"] ?>"></td>
               <td><input class="border-2 BORDER-black" type="text" name="annee_livre" value="<?= $product["annee_livre"] ?>"></td>
               <td><input class="border-2 BORDER-black" type="text" name="tome_livre" value="<?= $product["tome_livre"] ?>" min="1"></td>
               <td><input class="border-2 BORDER-black" type="text" name="genre_livre" value="<?= $product["genre_livre"] ?>"></td>
               <td><input class="border-2 BORDER-black" type="text" name="etat_livre" value="<?= $product["etat_livre"] ?>"></td>
-              <button class="border-black border-2 m-1 hover:bg-black transition:2s hover:text-white animate-fade" type="submit">Modifier</button>
+              <td>
+                <input type="hidden" name="id_livre" value="<?= $product["id_livre"] ?>">
+                <button class="border-black border-2 m-1 hover:bg-black transition:2s hover:text-white animate-fade" type="submit">Modifier</button>
+              </td>
             </form>
             <td class="flex justify-center items-center">
               <form action="includes/delete_book.inc.php" method="post">
                 <input type="hidden" name="id_livre" value="<?= $product["id_livre"] ?>">
                 <button class="bg-red-600 border-black border-2 m-1 hover:bg-black transition:2s hover:text-white animate-fade" type="submit">Supprimer</button>
               </form>
-
-
             </td>
           </tr>
         <?php endforeach; ?>

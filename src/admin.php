@@ -6,13 +6,10 @@ if (!isset($_SESSION['user_id'])) {
   die();
 }
 
-if ($_SESSION['user_role'] !== 'admin') {
-  header("Location: index.php");
-  die();
-}
-
-
 require_once('includes/dbh.inc.php');
+
+
+
 
 $query_products = "SELECT id_livre, nom_livre, auteur_livre, annee_livre, tome_livre, genre_livre, etat_livre FROM livre";
 $stmt_products = $pdo->query($query_products);
