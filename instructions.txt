@@ -72,7 +72,7 @@ Expression de Besoin :
         - prenom_user
         - adresse_user
         - telephone_user
-        - livre_emprunt 
+        - livre_emprun_T 
             - peut être nul si aucun emprunt
             - si emprunt, faire passer id_livre, titre_livre, auteur_livre, annee_livre
 
@@ -108,7 +108,11 @@ Expression de Besoin :
 
     - Utilisateurs
         
+CREATE TABLE users (
+    id_user INT(10) NOT NULL AUTO_INCREMENT,
+    
 
+)
 
 
 

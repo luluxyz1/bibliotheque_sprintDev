@@ -11,7 +11,7 @@ try {
 
 
 
-    echo "Database connection successful";
+    echo "Connecté à '$dbName' sur '$host' avec succès.";
 } catch (PDOException $e) {
     echo "Database connection failed: " . $e->getMessage();
 }
