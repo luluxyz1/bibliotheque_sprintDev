@@ -16,6 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
         $sql = "INSERT INTO livre (nom_livre, auteur_livre, annee_livre, tome_livre, genre_livre, etat_livre) VALUES (?, ?, ?, ?, ?, ?)";
+
+
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$titre, $auteur, $annee, $tome, $genre, $etat]);
 

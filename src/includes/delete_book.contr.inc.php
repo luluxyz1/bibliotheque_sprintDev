@@ -9,7 +9,10 @@ function delete_book(int $id): void
     $sql = "DELETE FROM livre WHERE id_livre = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$id]);
+    $pdo = null;
+    $stmt = null;
+
 
     header("Location: ../index.php?delete_book=success");
-    exit();  
+    die();
 }

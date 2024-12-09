@@ -17,102 +17,65 @@ $products = $stmt_products->fetchAll();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="output.css" rel="stylesheet">
+  <link src="output.js" rel="script">
 </head>
 
-<body class="bg-red-600 flex-col justify-center items-center">
-  <!-- Titre page -->
-  <div class="py-5">
-    <h1 class="text-4xl font-bold text-center">
-      ADMIN - Bibliothèque
-    </h1>
+<body>
+
+  <h1 class="text-4xl"> Bibliothèque </h1>
+  <h1 class="text-2xl"> Ajouter un livre </h1>
+  <div class="flex">
+    <form class="flex-col flex w-64" action="includes/add_book.inc.php" method="post">
+      <input placeholder="Titre du livre" class="border-black border-2 m-1" type="text" name="nom_livre" id="nom_livre" required>
+      <input placeholder="Auteur du livre" class="border-black border-2 m-1" type="text" name="auteur_livre" id="auteur_livre" required>
+      <input placeholder="Année du livre" class="border-black border-2 m-1" type="number" name="annee_livre" id="annee_livre" required>
+      <input placeholder="Tome du livre" class="border-black border-2 m-1" type="number" name="tome_livre" id="tome_livre" required>
+      <input placeholder="Genre du livre" class="border-black border-2 m-1" type="text" name="genre_livre" id="genre_livre" required>
+      <select placeholder="Etat du livre" class="border-black border-2 m-1" name="etat_livre" id="etat_livre" required>
+        <option value="Disponible">Disponible</option>
+        <option value="Réservé">Réservé</option>
+        <option value="Indisponible">Indisponible</option>
+      </select>
+      <button class="border-black border-2 m-1 hover:bg-black transition:2s hover:text-white animate-fade" type="submit">Ajouter</button>
   </div>
-  <!-- Boutons -->
-  <div class="bg-blue-500 py-5">
-    <div class="flex justify-center">
-      <h1 class=" font-bold underline text-3xl">
-        Ajout des livres
-      </h1>
-    </div>
 
-
-    <div class="flex items-center px-8 justify-center w-full  ">
-      <div class="flex-col">
-        <form action="includes/add_book.inc.php" method="post">
-          <div class="flex-col">
-            <label for="nom_livre">Nom du livre</label>
-            <input type="text" name="nom_livre" id="nom_livre" required>
-          </div>
-          <div class="flex-col">
-            <label for="auteur_livre">Auteur du livre</label>
-            <input type="text" name="auteur_livre" id="auteur_livre" required>
-          </div>
-          <div class="flex-col">
-            <label for="annee_livre">Année du livre</label>
-            <input type="number" name="annee_livre" id="annee_livre" required>
-          </div>
-          <div class="flex-col">
-            <label for="tome_livre">Tome du livre</label>
-            <input type="number" name="tome_livre" id="tome_livre" required>
-          </div>
-          <div class="flex-col">
-            <label for="genre_livre">Genre du livre</label>
-            <input type="text" name="genre_livre" id="genre_livre" required>
-          </div>
-          <div class="flex-col">
-            <label for="etat_livre">Etat du livre</label>
-            <form action="includes/add_book.inc.php" method="post">
-              <input class="border-black" list="etat" name="etat_livre" id="etat_livre">
-              <select name="etat_livre" id="etat_livre">
-                <option value="Disponible">Disponible</option>
-                <option value="Réservé">Réservé</option>
-                <option value="Indisponible">Indisponible</option>
-
-              </select>
-          </div>
-          <div class="flex-col">
-            <button type="submit" name="add_book">Ajouter le livre</button>
-          </div>
-
-
-      </div>
-
-
-    </div>
-
-  </div>
-  <!-- Liste des livres -->
-  <div>
-    <p> Liste des livres : </p>
-    <table class="flex  justify-center">
-      <tr class="mx-4  justify-center bg-red-600">
-        <th>Id</th>
-        <th>Titre</th>
-        <th>Auteur</th>
-        <th>Année</th>
-        <th>Tome</th>
-        <th>Genre</th>
-        <th>Etat</th>
-      </tr>
-      <?php foreach ($products as $product) : ?>
-        <tr class="mx-4 px-16">
-          <td><?= $product['id_livre'] ?></td>
-          <td><?= $product['nom_livre'] ?></td>
-          <td><?= $product['auteur_livre'] ?></td>
-          <td><?= $product['annee_livre'] ?></td>
-          <td><?= $product['tome_livre'] ?></td>
-          <td><?= $product['genre_livre'] ?></td>
-          <td><?= $product['etat_livre'] ?></td>
-          <form action="includes/delete_book.inc.php" method="post">
-            <input type="hidden" name="id_livre" value="<?= $product['id_livre'] ?>">
-
-            <button type="submit" name="delete_book">Supprimer</button>
-          </form>
+  <div class="w-full">
+    <table class="w-1/2 flex-col justify-center items-center">
+      <thead class="w-full">
+        <tr class="border-black border-2 w-full ">
+          <th class="w-full">Titre</th>
+          <th class="w-full">Auteur</th>
+          <th class="w-full">Année</th>
+          <th class="w-full">Tome</th>
+          <th class="w-full">Genre</th>
+          <th class="w-full">Etat</th>
+          <th class="w-full">Actions</th>
         </tr>
-        </form>
-      <?php endforeach; ?>
+      </thead>
+      <tbody class="w-full">
+        <?php foreach ($products as $product) : ?>
+          <tr class="flex ">
+            <td class="border-black border-2 "><?= $product['nom_livre'] ?></td>
+            <td class="border-black border-2 "><?= $product['auteur_livre'] ?></td>
+            <td class="border-black border-2 "><?= $product['annee_livre'] ?></td>
+            <td class="border-black border-2 "><?= $product['tome_livre'] ?></td>
+            <td class="border-black border-2 "><?= $product['genre_livre'] ?></td>
+            <td class="border-black border-2 "><?= $product['etat_livre'] ?></td>
+            <td class="border-black border-2 ">
+              <form action="includes/delete_book.inc.php" method="post">
+                <input type="hidden" name="id_livre" value="<?= $product['id_livre'] ?>">
+                <button type="submit">Supprimer</button>
+              </form>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+
     </table>
   </div>
 
+
 </body>
+<script src="output.js"></script>
 
 </html>

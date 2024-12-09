@@ -1,15 +1,23 @@
 <?php
 
-if ($SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $id = $_POST["id_livre"];
 
     try {
 
         require_once "dbh.inc.php";
-        require_once "delete_book.contr.inc.php";
+        require_once "add_book.contr.inc.php";
 
-        delete_book($id);
+
+        $sql = "DELETE FROM livre WHERE id_livre = ?";
+
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+
+        header("Location: ../index.php");
+        exit();
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
