@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Récupère l'utilisateur à partir du nom d'utilisateur
         $result = get_user($pdo, $username);
+        $result_role = get_role($pdo, $role);
 
         if (is_username_wrong($result)) {
             $errors["login_incorrect"] = "Le nom d'utilisateur est incorrect.";
@@ -47,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $_SESSION["user_id"] = $result["id"];
         $_SESSION["user_username"] = htmlspecialchars($result["username"]);
+        $_SESSION["user_role"] = htmlspecialchars($result_role["role"]);
 
         $_SESSION["last_regeneration"] = time();
 
