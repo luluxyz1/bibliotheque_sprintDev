@@ -1,19 +1,23 @@
 <?php
 
-require_once "includes/dbh.inc.php";
-require_once "includes/config_session.inc.php";
-require_once "includes/admin/signup_view.inc.php";
+require_once "../includes/dbh.inc.php";
+require_once "../includes/config_session.inc.php";
+require_once "../includes/admin/signup_view.inc.php";
 
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["admin_username"])) {
-  header("location: index.php");
+  header("location: ../index.php");
   exit;
 }
 
 
 $products = $pdo->query("SELECT * FROM livre")->fetchAll();
 $genres = $pdo->query("SELECT DISTINCT nom FROM genre")->fetchAll(PDO::FETCH_COLUMN);
+
+$query_etat = $pdo->query("SELECT etat_livre FROM livre")->fetchAll();
+$etats = array_unique(array_column($query_etat, "etat"));
 ?>
+
 
 <!doctype html>
 <html>
@@ -21,24 +25,26 @@ $genres = $pdo->query("SELECT DISTINCT nom FROM genre")->fetchAll(PDO::FETCH_COL
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="output.css" rel="stylesheet">
-  <link src="output.js" rel="script">
+  <link href="../output.css" rel="stylesheet">
+  <link src="../output.js" rel="script">
   <title>Gestion des livres - Bibliothèque</title>
 </head>
 
 <body>
 
   <H1 class="underline text-red-600"> Bonjour <?= $_SESSION["admin_username"] ?> </H1>
+  <a href="../admin_dashboard.php">Retour</a>
+
 
   <div class="flex-col flex justify-center items-center">
     <h1 class="text-4xl"> Bibliothèque </h1><br>
-    <a href="includes/users/logout.inc.php" class="border-black border-2 m-1 hover:bg-black transition:2s hover:text-white animate-fade">Déconnexion</a>
+
     <h1 class="text-2xl"> Ajouter un livre </h1>
   </div>
 
 
   <div class="flex flex-col justify-center items-center">
-    <form class="flex-col flex w-64" action="includes/add_book.inc.php" method="post">
+    <form class="flex-col flex w-64" action="../includes/add_book.inc.php" method="post">
       <input placeholder="Titre du livre" class="border-black border-2 m-1" type="text" name="nom_livre" id="nom_livre" required>
       <input placeholder="Auteur du livre" class="border-black border-2 m-1" type="text" name="auteur_livre" id="auteur_livre" required>
       <input placeholder="Année du livre" class="border-black border-2 m-1" type="number" name="annee_livre" id="annee_livre" required>
@@ -50,8 +56,8 @@ $genres = $pdo->query("SELECT DISTINCT nom FROM genre")->fetchAll(PDO::FETCH_COL
       </select>
       <select placeholder="Etat du livre" class="border-black border-2 m-1" name="etat_livre" id="etat_livre" required>
         <option value="Disponible">Disponible</option>
-        <option value="Réservé">Réservé</option>
         <option value="Indisponible">Indisponible</option>
+        <option value="Reserve">Réservé</option>
       </select>
 
       <button class="border-black border-2 m-1 hover:bg-black transition:2s hover:text-white animate-fade" type="submit">Ajouter le livre</button>
@@ -81,7 +87,7 @@ $genres = $pdo->query("SELECT DISTINCT nom FROM genre")->fetchAll(PDO::FETCH_COL
       <tbody>
         <?php foreach ($products as $product) : ?>
           <tr>
-            <form action="includes/update_book.inc.php" method="post">
+            <form action="../includes/update_book.inc.php" method="post">
               <td><input class="border-2 BORDER-black" type="text" name="id_livre" value="<?= $product["id_livre"] ?>" disabled></td>
               <td><input class="border-2 BORDER-black" type="text" name="nom_livre" value="<?= $product["nom_livre"] ?>" required></td>
               <td><input class="border-2 BORDER-black" type="text" name="auteur_livre" value="<?= $product["auteur_livre"] ?>" required></td>
@@ -100,7 +106,7 @@ $genres = $pdo->query("SELECT DISTINCT nom FROM genre")->fetchAll(PDO::FETCH_COL
               </td>
             </form>
             <td class="flex justify-center items-center">
-              <form action="includes/delete_book.inc.php" method="post">
+              <form action="../includes/delete_book.inc.php" method="post">
                 <input type="hidden" name="id_livre" value="<?= $product["id_livre"] ?>">
                 <button class="bg-red-600 border-black border-2 m-1 hover:bg-black transition:2s hover:text-white animate-fade" type="submit">Supprimer</button>
               </form>
@@ -114,6 +120,6 @@ $genres = $pdo->query("SELECT DISTINCT nom FROM genre")->fetchAll(PDO::FETCH_COL
 
 
 </body>
-<script src="output.js"></script>
+<script src="../output.js"></script>
 
 </html>

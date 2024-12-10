@@ -39,5 +39,3 @@ function set_user(object $pdo, string $password, string $email,  string $usernam
     $stmt->bindParam(":email", $email);
     $stmt->execute();
 }
-
-

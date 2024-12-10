@@ -3,8 +3,6 @@
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
-    $prenom = $_POST["prenom"];
-    $nom = $_POST["nom"];
     $username = $_POST["username"];
     $password = $_POST["password"];
     $email = $_POST["email"];
@@ -38,14 +36,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["errors_signup"] = $errors;
 
             $signupData = [
-                "prenom" => $prenom,
-                "nom" => $nom,
                 "username" => $username,
                 "email" => $email
             ];
             $_SESSION["signup_data"] = $signupData;
 
-            header("Location: admin_dashboard.php");
+            header("Location: ../../admin_dashboard/manageAllUsers?signup=error");
             die();
         }
 
@@ -57,10 +53,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $pdo = null;
         $stmt = null;
+
+        header("Location: ./../admin_dashboard/manageAllUsers.php?signup=success");
     } catch (PDOException $e) {
         die("Query failed: " . $e->getMessage());
     }
 } else {
-    header("Location: admin_dashboard.php");
+    header("Location: ../../admin_dashboard/manageAllUsers.php?signup=error");
     die();
 }

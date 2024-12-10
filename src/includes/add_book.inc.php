@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($bookExists > 0) {
             $_SESSION['book_exists'] = "Le livre existe déjà.";
-            header("Location: ../manageBook.php");
+            header("Location: ../admin_dashboard/manageBook.php");
             exit();
         }
 
@@ -36,13 +36,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt = null;
 
         $_SESSION['book_exists'] = "Livre ajouté avec succès.";
-        header("Location: ../manageBook.php");
+        header("Location: ../admin_dashboard/manageBook.php");
         die();
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
 } else {
     $_SESSION['book_exists'] = "Erreur lors de l'ajout du livre.";
-    header("Location: ../manageBook.php");
+    header("Location: ../admin_dashboard/manageBook.php");
     exit();
 }

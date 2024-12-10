@@ -27,12 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-        header("Location: ../manageBook.php?update_book=success");
+        header("Location: ../admin_dashboard/manageBook.php?update_book=success");
         die();
     } catch (PDOException $e) {
         echo "Erreur (concernant update_book.inc.php):  " . $e->getMessage();
     }
 } else {
-    header("Location: ../manageBook.php");
+    header("Location: ../admin_dashboard/manageBook.php");
     die();
 }

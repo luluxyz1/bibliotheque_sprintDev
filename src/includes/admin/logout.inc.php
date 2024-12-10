@@ -5,5 +5,5 @@ session_unset();
 session_destroy();
 
 
-header("Location: ../../index.php?logout=success");
+header("Location: ../../login.php?logout=success");
 die();

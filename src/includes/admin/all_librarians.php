@@ -1,6 +1,6 @@
 <?php
 
-require_once "../dbh.inc.php"
+require_once "../dbh.inc.php";
 
 try {
 
@@ -11,7 +11,6 @@ try {
 
     $pdo = null;
     $stmt_allUsers = null;
-
 } catch (PDOException $e) {
     die("Query failed: " . $e->getMessage());
 }
@@ -20,35 +19,35 @@ try {
 
 <!DOCTYPE html>
 <html lang="fr">
-    
-    <head>
-        <meta charset="UTF-8">
-        <title>Admin Dashboard - Utilisateurs</title>
-        <link rel="stylesheet" href="../../output.css">
-        <script src="../../output.js"></script>
-    </head>
 
-    <body>
-        <table>
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Utilisateurs</title>
+    <link rel="stylesheet" href="../../output.css">
+    <script src="../../output.js"></script>
+</head>
 
+<body>
+    <table>
+
+        <tr>
+            <th>Id</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Nom d'utilisateur</th>
+            <th>Email</th>
+            <th>Mot de passe</th>
+        </tr>
+
+        <?php foreach ($allUsers as $user) { ?>
             <tr>
-                <th>Id</th>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Nom d'utilisateur</th>
-                <th>Email</th>
-                <th>Mot de passe</th>
+                <td><?php echo $user['id']; ?></td>
+                <td><?php echo $user['prenom']; ?></td>
+                <td><?php echo $user['nom']; ?></td>
+                <td><?php echo $user['username']; ?></td>
+                <td><?php echo $user['email']; ?></td>
+                <td><?php echo $user['password']; ?></td>
             </tr>
-
-            <?php foreach ($allUsers as $user) { ?>
-                <tr>
-                    <td><?php echo $user['id']; ?></td>
-                    <td><?php echo $user['prenom']; ?></td>
-                    <td><?php echo $user['nom']; ?></td>
-                    <td><?php echo $user['username']; ?></td>
-                    <td><?php echo $user['email']; ?></td>
-                    <td><?php echo $user['password']; ?></td>
-                </tr>
-            <?php } ?>
-        </table>
-    </body>
+        <?php } ?>
+    </table>
+</body>

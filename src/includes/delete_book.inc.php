@@ -16,12 +16,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $pdo = null;
         $stmt = null;
 
-        header("Location: ../manageBook.php?delete_book=success");
+        header("Location: ../admin_dashboard/manageBook.php?delete_book=success");
         die();
     } catch (PDOException $e) {
         echo "Erreur (concernant delete_book.inc.php):  " . $e->getMessage();
     }
 } else {
-    header("Location: ../manageBook.php");
+    header("Location: ../admin_dashboard/manageBook.php");
     die();
 }

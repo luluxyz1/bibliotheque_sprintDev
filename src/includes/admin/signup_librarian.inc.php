@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             ];
             $_SESSION["signup_data"] = $signupData;
 
-            header("Location:../../admin_dashboard.php?signup=error");
+            header("Location:../../admin_dashboard/manageAllUsers.php?signup_librarian=error1");
             die();
         }
 
@@ -58,6 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Query failed: " . $e->getMessage());
     }
 } else {
-    header("Location:../../admin_dashboard.php?signup=error");
+    header("Location:../../admin_dashboard.php?signup_librarian=error2");
     die();
 }

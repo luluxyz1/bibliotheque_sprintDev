@@ -25,23 +25,28 @@ if (!isset($_SESSION["admin_username"])) {
 </head>
 
 <body>
-    <h1 class="text-4xl">ADMIN DASHBOARD </h1><br>
-    <?php echo "Bonjour, " .  $_SESSION['admin_username']; ?>
-    <br><br>
-    <div class="flex flex-col">
-        <a class="underline text-blue-700" href="../src/includes/users/login.php">Connexion utilisateur</a>
-        <a href="../src/includes/librarian/librarian_login.php">Connexion libraire</a>
-        <a href="../src/index.php">Page d'accueil</a>
+    <div class="bg-yellow-200 h-screen w-72">
+        <div class="w-full h-full ">
+            <div class="flex flex-col justify-start items-center">
+                <h1 class="text-4xl py-3 underline font-bold ">Bibliothèque</h1>
+                <h2 class="text-xl font-semibold">Dashboard (Admin)</h2>
+                <?php ?><p class="font-thin">Bonjour, <?php echo $_SESSION['admin_username']; ?></p><?php ?>
+                <form action="includes/users/logout.inc.php" method="post">
+                    <button type="submit" class="hover:font-bold underline">Se déconnecter</button>
+                </form>
+            </div>
+            <br><br>
+            <div class="flex flex-col justify-start mx-6 items-start">
+                <a class="text-black hover:font-semibold hover:underline" href="admin_dashboard/manageBook.php">Livres</a>
+                <a class="hover:font-semibold hover:underline" href="admin_dashboard/manageAllUsers.php">Utilisateurs</a>
+
+            </div>
+        </div>
+
 
     </div>
 
-    <div>
-        <a href="manageBook.php">Livres</a>
-        <a href="manageAllUsers.php">Utilisateurs</a>
-    </div>
-    <form action="includes/users/logout.inc.php" method="post">
-        <button type="submit">Se déconnecter</button>
-    </form>
+
 
 </body>
 <script src="output.js"></script>
