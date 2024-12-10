@@ -1,6 +1,13 @@
 <?php
+session_start();
 
 require_once 'includes/dbh.inc.php';
+
+if (!isset($_SESSION["user_username"])) {
+  header("Location: login.php");
+  exit();
+}
+
 
 $products = $pdo->query("SELECT * FROM livre")->fetchAll();
 $genres = $pdo->query("SELECT DISTINCT nom FROM genre")->fetchAll(PDO::FETCH_COLUMN);
@@ -19,8 +26,11 @@ $genres = $pdo->query("SELECT DISTINCT nom FROM genre")->fetchAll(PDO::FETCH_COL
 
 <body>
 
+  <H1> Bonjour <?= $_SESSION["user_username"] ?> </H1>
+
   <div class="flex-col flex justify-center items-center">
     <h1 class="text-4xl"> Bibliothèque </h1><br>
+    <a href="includes/logout.inc.php" class="border-black border-2 m-1 hover:bg-black transition:2s hover:text-white animate-fade">Déconnexion</a>
     <h1 class="text-2xl"> Ajouter un livre </h1>
   </div>
 
