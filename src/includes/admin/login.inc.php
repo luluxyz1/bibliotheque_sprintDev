@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     try {
 
-        require_once "dbh.inc.php";
+        require_once "../dbh.inc.php";
         require_once "login_model.inc.php";
         require_once "login_contr.inc.php";
 
@@ -21,8 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         // Récupère l'utilisateur à partir du nom d'utilisateur
-        $result = get_user($pdo, $username);
-        $result_role = get_role($pdo, $role);
+        $result = get_admin($pdo, $username);
 
         if (is_username_wrong($result)) {
             $errors["login_incorrect"] = "Le nom d'utilisateur est incorrect.";
@@ -32,13 +31,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
 
-        require_once 'config_session.inc.php';
+        require_once '../config_session.inc.php';
 
         if ($errors) {
             $_SESSION["errors_login"] = $errors;
 
+            header("Location: ../admin/admin_login.php");
 
-            header("Location: ../login.php");
             die();
         }
 
@@ -46,14 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sessionId = $newSessionId . "_" . $result["id"];
         session_id($sessionId);
 
-        $_SESSION["user_id"] = $result["id"];
-        $_SESSION["user_username"] = htmlspecialchars($result["username"]);
-        $_SESSION["user_role"] = htmlspecialchars($result_role["role"]);
+        $_SESSION["admin_id"] = $result["id"];
+        $_SESSION["admin_username"] = htmlspecialchars($result["username"]);
 
         $_SESSION["last_regeneration"] = time();
 
-        header("Location: ../index.php?login=success");
-        header("refresh:2;url=../index.php");
+        header("Location: ../../admin_dashboard.php?login=success");
         $pdo = null;
         $stmt = null;
 
@@ -68,6 +65,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Query failed: " . $e->getMessage());
     }
 } else {
-    header("Location: ../login.php");
+    header("Location: ../login.php?login=error");
     die();
 }

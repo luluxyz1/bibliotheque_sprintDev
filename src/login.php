@@ -1,39 +1,48 @@
 <?php
-require_once "includes/config_session.inc.php";
-require_once "includes/signup_view.inc.php";
-require_once "includes/login_view.inc.php";
+session_start();
 
 
+require_once "includes/dbh.inc.php";
 ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Connexion</title>
-    <link href="output.css" rel="stylesheet">
-    <link src="output.js" rel="script">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple HTML Page</title>
+    <link rel="stylesheet" href="output.css">
 </head>
 
-<body>
-    <div>
-        <h1 class="text-4xl"> Bibliothèque </h1><br>
-        <h1 class="text-2xl"> Connexion </h1>
+<body class="h-full w-full">
+    <?php
+    if (isset($_SESSION["user_username"])) {
+        echo '<h1 class="font-title text-2xl">' .   "Bonjour, " . $_SESSION["user_username"] . '</h1>';
+    } else {
 
-        <div>
+        echo '<h1 class="font-title text-2xl">Bienvenue dans notre bibliothèque.</h1>';
+    }
+    ?>
+    <div class="flex flex-col">
 
-            <form action="includes/login.inc.php" method="post">
-                <input placeholder="Nom d'utilisateur" class="border-black border-2 m-1" type="text" name="username" id="username">
-                <input placeholder="Mot de passe" class="border-black border-2 m-1" type="password" name="password" id="password">
-                <button class="border-black border-2 m-1 hover:bg-black transition:2s hover:text-white animate-fade" type="submit" name="submit">Se connecter</button>
-            </form>
-            <a href="signup.php">Pas encore inscrit ?</a>
-            <?php check_login_errors(); ?>
+        <?php
+        if (isset($_SESSION["user_username"])) {
+            echo '<form action="includes/users/logout.inc.php" method="post">';
+            echo '<button type="submit">Se déconnecter</button>';
+            echo '</form>';
+        } else {
+            echo '<a class="underline hover:text-red-600" href="includes/users/login.php">Connexion utilisateur</a>';
+            echo '<a class="underline hover:text-red-600" href="includes/librarian/librarian_login.php">Connexion libraire</a>';
+            echo '<a class="underline hover:text-red-600" href="includes/admin/admin_login.php">Connexion administrateur</a>';
+        }
+        ?>
 
-        </div>
+
+
     </div>
 </body>
+
 <script src="output.js"></script>
 
 </html>
