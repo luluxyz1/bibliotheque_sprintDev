@@ -1,24 +1,9 @@
 <?php
-session_start();
 
-require_once('includes/dbh.inc.php');
+require_once 'includes/dbh.inc.php';
 
-
-
-
-$query_products = "SELECT id_livre, nom_livre, auteur_livre, annee_livre, tome_livre, genre_livre, etat_livre FROM livre";
-$stmt_products = $pdo->query($query_products);
-$products = $stmt_products->fetchAll();
-
-
-// Lister tous les genres dispo dans la base de données
-
-$query_genres = "SELECT nom FROM genre";
-$stmt_genres = $pdo->query($query_genres);
-$genres = $stmt_genres->fetchAll(PDO::FETCH_COLUMN, 0);
-$genres = array_unique($genres);
-
-
+$products = $pdo->query("SELECT * FROM livre")->fetchAll();
+$genres = $pdo->query("SELECT DISTINCT nom FROM genre")->fetchAll(PDO::FETCH_COLUMN);
 ?>
 
 <!doctype html>
@@ -36,23 +21,22 @@ $genres = array_unique($genres);
 
   <div class="flex-col flex justify-center items-center">
     <h1 class="text-4xl"> Bibliothèque </h1><br>
-    <a href="includes/logout.inc.php" class="border-black border-2 m-1 hover:bg-black transition:2s hover:text-white animate-fade">Déconnexion</a>
     <h1 class="text-2xl"> Ajouter un livre </h1>
   </div>
 
 
   <div class="flex justify-center items-center">
     <form class="flex-col flex w-64" action="includes/add_book.inc.php" method="post">
-      <input placeholder="Titre du livre" class="border-black border-2 m-1" type="text" name="nom_livre" id="nom_livre">
-      <input placeholder="Auteur du livre" class="border-black border-2 m-1" type="text" name="auteur_livre" id="auteur_livre">
-      <input placeholder="Année du livre" class="border-black border-2 m-1" type="number" name="annee_livre" id="annee_livre">
-      <input placeholder="Tome du livre" class="border-black border-2 m-1" type="number" name="tome_livre" id="tome_livre" min="1">
-      <select placeholder="Genre du livre" class="border-black border-2 m-1" name="genre_livre" id="genre_livre">
+      <input placeholder="Titre du livre" class="border-black border-2 m-1" type="text" name="nom_livre" id="nom_livre" required>
+      <input placeholder="Auteur du livre" class="border-black border-2 m-1" type="text" name="auteur_livre" id="auteur_livre" required>
+      <input placeholder="Année du livre" class="border-black border-2 m-1" type="number" name="annee_livre" id="annee_livre" required>
+      <input placeholder="Tome du livre" class="border-black border-2 m-1" type="number" name="tome_livre" id="tome_livre" min="1" required>
+      <select placeholder="Genre du livre" class="border-black border-2 m-1" name="genre_livre" id="genre_livre" required>
         <?php foreach ($genres as $genre) : ?>
           <option value="<?= $genre ?>"><?= $genre ?></option>
         <?php endforeach; ?>
       </select>
-      <select placeholder="Etat du livre" class="border-black border-2 m-1" name="etat_livre" id="etat_livre">
+      <select placeholder="Etat du livre" class="border-black border-2 m-1" name="etat_livre" id="etat_livre" required>
         <option value="Disponible">Disponible</option>
         <option value="Réservé">Réservé</option>
         <option value="Indisponible">Indisponible</option>
@@ -81,12 +65,17 @@ $genres = array_unique($genres);
           <tr>
             <form action="includes/update_book.inc.php" method="post">
               <td><input class="border-2 BORDER-black" type="text" name="id_livre" value="<?= $product["id_livre"] ?>" disabled></td>
-              <td><input class="border-2 BORDER-black" type="text" name="nom_livre" value="<?= $product["nom_livre"] ?>"></td>
-              <td><input class="border-2 BORDER-black" type="text" name="auteur_livre" value="<?= $product["auteur_livre"] ?>"></td>
-              <td><input class="border-2 BORDER-black" type="text" name="annee_livre" value="<?= $product["annee_livre"] ?>"></td>
-              <td><input class="border-2 BORDER-black" type="text" name="tome_livre" value="<?= $product["tome_livre"] ?>" min="1"></td>
-              <td><input class="border-2 BORDER-black" type="text" name="genre_livre" value="<?= $product["genre_livre"] ?>"></td>
-              <td><input class="border-2 BORDER-black" type="text" name="etat_livre" value="<?= $product["etat_livre"] ?>"></td>
+              <td><input class="border-2 BORDER-black" type="text" name="nom_livre" value="<?= $product["nom_livre"] ?>" required></td>
+              <td><input class="border-2 BORDER-black" type="text" name="auteur_livre" value="<?= $product["auteur_livre"] ?>" required></td>
+              <td><input class="border-2 BORDER-black" type="text" name="annee_livre" value="<?= $product["annee_livre"] ?>" required></td>
+              <td><input class="border-2 BORDER-black" type="text" name="tome_livre" value="<?= $product["tome_livre"] ?>" min="1" required></td>
+              <td><select class="border-2 BORDER-black" name="genre_livre" required>
+                  <?php foreach ($genres as $genre) : ?>
+                    <option value="<?= $genre ?>" <?= $product["genre_livre"] === $genre ? "selected" : "" ?>><?= $genre ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </td>
+              <td><input class="border-2 BORDER-black" type="text" name="etat_livre" value="<?= $product["etat_livre"] ?>" required></td>
               <td>
                 <input type="hidden" name="id_livre" value="<?= $product["id_livre"] ?>">
                 <button class="border-black border-2 m-1 hover:bg-black transition:2s hover:text-white animate-fade" type="submit">Modifier</button>
