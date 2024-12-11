@@ -32,8 +32,42 @@ $etats = array_unique(array_column($query_etat, "etat"));
 
 <body>
 
-  <H1 class="underline text-red-600"> Bonjour <?= $_SESSION["admin_username"] ?> </H1>
-  <a href="../admin_dashboard.php">Retour</a>
+  <div class="flex flex-row bg-yellow-200 h-24 w-full">
+    <div class="flex flex-col px-6">
+      <h1 class="flex text-2xl py-3 underline font-bold ">Bibliothèque</h1>
+      <h4 class="font-normal">Dashboard (Admin)</h4>
+    </div>
+    <div class="flex flex-row justify-center items-center mx-6">
+      <a href="../admin_dashboard.php" class="hover:font-bold underline">Accueil</a>
+    </div>
+    <div class="flex flex-row justify-center items-center mx-6">
+      <a href="../admin_dashboard/manageAllUsers.php" class="hover:font-bold underline">Ajout d'utilisateurs</a>
+    </div>
+    <div class="flex flex-col justify-center mx-6 items-center">
+      <a class="text-black hover:font-semibold hover:underline" href="manageBook.php">Livres</a>
+    </div>
+    <div class="flex flex-col justify-center mx-6 items-center">
+      <a class="text-black hover:font-semibold hover:underline" href="manageAdmins.php">Admins</a>
+    </div>
+    <div class="flex flex-col justify-center mx-6 items-center">
+      <a class="text-black hover:font-semibold hover:underline" href="manageLibrarians.php">Libraires</a>
+    </div>
+    <div class="flex flex-col justify-center mx-6 items-center">
+      <a class="text-black hover:font-semibold hover:underline" href="manageUsers.php">Utilisateurs</a>
+    </div>
+    <div class="flex justify-end items-center w-full mx-6">
+      <div class="flex flex-col">
+        <p class="font-thin">Bonjour, <?php echo $_SESSION['admin_username']; ?></p>
+        <form class="flex justify-end" action="../includes/logout.inc.php" method="post">
+          <button type="submit" class="hover:font-bold underline">Se déconnecter</button>
+        </form>
+
+      </div>
+    </div>
+
+
+
+  </div>
 
 
   <div class="flex-col flex justify-center items-center">
@@ -88,12 +122,12 @@ $etats = array_unique(array_column($query_etat, "etat"));
         <?php foreach ($products as $product) : ?>
           <tr>
             <form action="../includes/update_book.inc.php" method="post">
-              <td><input class="border-2 BORDER-black" type="text" name="id_livre" value="<?= $product["id_livre"] ?>" disabled></td>
-              <td><input class="border-2 BORDER-black" type="text" name="nom_livre" value="<?= $product["nom_livre"] ?>" required></td>
-              <td><input class="border-2 BORDER-black" type="text" name="auteur_livre" value="<?= $product["auteur_livre"] ?>" required></td>
-              <td><input class="border-2 BORDER-black" type="text" name="annee_livre" value="<?= $product["annee_livre"] ?>" required></td>
-              <td><input class="border-2 BORDER-black" type="text" name="tome_livre" value="<?= $product["tome_livre"] ?>" min="1" required></td>
-              <td><select class="border-2 BORDER-black" name="genre_livre" required>
+              <td><input class="border-2 " type="text" name="id_livre" value="<?= $product["id_livre"] ?>" readonly></td>
+              <td><input class="border-2 " type="text" name="nom_livre" value="<?= $product["nom_livre"] ?>" required></td>
+              <td><input class="border-2 " type="text" name="auteur_livre" value="<?= $product["auteur_livre"] ?>" required></td>
+              <td><input class="border-2 " type="text" name="annee_livre" value="<?= $product["annee_livre"] ?>" required></td>
+              <td><input class="border-2 " type="text" name="tome_livre" value="<?= $product["tome_livre"] ?>" min="1" required></td>
+              <td><select class="border-2" name="genre_livre" required>
                   <?php foreach ($genres as $genre) : ?>
                     <option value="<?= $genre ?>" <?= $product["genre_livre"] === $genre ? "selected" : "" ?>><?= $genre ?></option>
                   <?php endforeach; ?>

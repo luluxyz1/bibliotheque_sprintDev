@@ -1,8 +1,7 @@
+DROP DATABASE IF EXISTS bibliotheque_sprintdev;
 
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+CREATE DATABASE bibliotheque_sprintdev;
+use bibliotheque_sprintdev;
 
 
 CREATE TABLE admin (

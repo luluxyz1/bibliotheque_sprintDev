@@ -24,8 +24,8 @@ if (!isset($_SESSION["admin_username"])) {
     <link src="output.js" rel="script">
 </head>
 
-<body>
-    <div class="bg-yellow-200 h-screen w-72">
+<body class="flex bg-[url('../images/bibliotheque.jpg')] bg-cover bg-no-repeat">
+    <div class="flex bg-yellow-200 h-screen w-72">
         <div class="w-full h-full ">
             <div class="flex flex-col justify-start items-center">
                 <h1 class="text-4xl py-3 underline font-bold ">Bibliothèque</h1>
@@ -45,6 +45,8 @@ if (!isset($_SESSION["admin_username"])) {
 
 
     </div>
+
+
 
 
 
