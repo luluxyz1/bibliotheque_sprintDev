@@ -95,23 +95,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             </button>
                             <?php if ($book["etat_livre"] == "Disponible") { ?>
                                 <h1 class=" text-green-600 p-2 rounded-lg">Disponible</h1>
-                                <form action="borrow_book.inc.php" method="post">
-                                    <input type="hidden" name="id_livre" value="<?php echo $book["id_livre"]; ?>">
-                                    <button type="submit" name="id_user" value="<?php echo $book["id_user"]; ?>" class="border-2 border-green-600 hover:bg-green-700 hover:text-white p-2 rounded-lg">Réserver</button>
-                                </form>
+
                             <?php } else if ($book["etat_livre"] === "Indisponible") { ?>
                                 <h1 class=" text-red-600 p-2 rounded-lg">Indisponible</h1>
 
                                 <?php } else {
-                                if ($book["etat_livre"] === "Réservé"  && $book["id_user"] === $_SESSION["user_id"]) { ?>
+                                if ($book["etat_livre"] === "Réservé") { ?>
                                     <h1 class=" text-yellow-600 p-2 rounded-lg">Réservé</h1>
-                                    <form action="includes/cancel_reservation.inc.php" method="post">
-                                        <button type="submit" name="id_livre" value="<?php echo $book["id_livre"]; ?>" class="border-2 border-yellow-600 hover:bg-yellow-700 hover:text-white p-2 rounded-lg">Annuler la réservation</button>
-                                    </form>
-                                <?php } else { ?>
-                                    <h1 class=" text-yellow-600 p-2 rounded-lg">Réservé</h1>
-                                    <h1 class="border-2 border-yellow-600   p-2 rounded-lg">Disponible le <?php echo $book["date_retour"]; ?></h1>
+                                    <button class="border-2 border-black p-2 rounded-lg hover:bg-black hover:text-white" type="submit" name="id_livre" value="<?php echo $book["id_livre"]; ?>">Réserver</button>
+
+
                                 <?php } ?>
+
+
 
                             <?php } ?>
 
