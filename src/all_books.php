@@ -1,8 +1,13 @@
 <?php
+
 session_start();
-require_once "includes/dbh.inc.php";
 
+require_once "includes/dbh.inc.php"; // Chemin vers votre fichier dbh.inc.php
 
+$query_all_books = "SELECT * FROM livre";
+$stmt_all_books = $pdo->prepare($query_all_books);
+$stmt_all_books->execute();
+$all_books = $stmt_all_books->fetchAll();
 
 ?>
 
@@ -12,21 +17,24 @@ require_once "includes/dbh.inc.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Bibliotheque</title>
+    <title>Tous les livres - Bibliothèque</title>
     <link rel="stylesheet" href="output.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 </head>
+
 
 <body>
 
     <header class="flex bg-gray-800 text-white p-4">
         <div class="flex w-full">
-            <h1 class="text-4xl flex justify-center items-center"> Bibliothèque </h1>
+            <a href="index.php">
+                <h1 class="text-4xl flex justify-center items-center"> Bibliothèque </h1>
+            </a>
         </div>
         <!-- Barre de recherche pour les livres -->
         <div class="flex w-full justify-end items-center">
             <form class="flex" action="search_book.php" method="post">
-                <input class="w-96 border-2 rounded-xl border-black text-black" type="text" name="key" placeholder="Rechercher un livre, un auteur, un genre...">
+                <input class=" text-black w-96 border-2 rounded-xl border-black" type="text" name="key" placeholder="Rechercher un livre, un auteur, un genre...">
                 <button class="mx-4 underline hover:font-bold" type="submit" name="submit">Recherche</button>
             </form>
         </div>
@@ -48,21 +56,19 @@ require_once "includes/dbh.inc.php";
 
     </header>
 
+
     <div class="flex flex-col w-auto h-auto">
-        <a href="all_books.php" class="text-3xl py-2 w-auto">Tous les livres</a>
-        <a href="last_books.php" class="text-3xl py-2 w-auto">Derniers ajouts</a>
+        <h1 class="flex justify-center items-center text-3xl py-2 w-auto underline">Tous les livres</h1>
+        <?php
+        foreach ($all_books as $book) {
+
+            echo '<a href="selected_book.php?id=' . $book['id_livre'] . '" class="text-3xl py-2 w-auto">' . $book['nom_livre'] . '</a>';
+        }
+        ?>
     </div>
-
-
-
-
-
-
-
 
 </body>
 
 <script src="output.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
 </html>

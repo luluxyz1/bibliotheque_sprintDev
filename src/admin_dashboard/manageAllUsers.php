@@ -42,9 +42,6 @@ $query_admins = $pdo->query("SELECT * FROM admin")->fetchAll();
             <a href="../admin_dashboard/manageAllUsers.php" class="hover:font-bold underline">Ajout d'utilisateurs</a>
         </div>
         <div class="flex flex-col justify-center mx-6 items-center">
-            <a class="text-black hover:font-semibold hover:underline" href="manageBook.php">Livres</a>
-        </div>
-        <div class="flex flex-col justify-center mx-6 items-center">
             <a class="text-black hover:font-semibold hover:underline" href="manageAdmins.php">Admins</a>
         </div>
         <div class="flex flex-col justify-center mx-6 items-center">

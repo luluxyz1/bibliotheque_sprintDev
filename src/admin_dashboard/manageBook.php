@@ -14,6 +14,8 @@ if (!isset($_SESSION["admin_username"])) {
 $products = $pdo->query("SELECT * FROM livre")->fetchAll();
 $genres = $pdo->query("SELECT DISTINCT nom FROM genre")->fetchAll(PDO::FETCH_COLUMN);
 
+$query_users = $pdo->query("SELECT id_user FROM users")->fetchAll();
+
 $query_etat = $pdo->query("SELECT etat_livre FROM livre")->fetchAll();
 $etats = array_unique(array_column($query_etat, "etat"));
 ?>
@@ -39,22 +41,13 @@ $etats = array_unique(array_column($query_etat, "etat"));
     </div>
     <div class="flex flex-row justify-center items-center mx-6">
       <a href="../admin_dashboard.php" class="hover:font-bold underline">Accueil</a>
+
     </div>
-    <div class="flex flex-row justify-center items-center mx-6">
-      <a href="../admin_dashboard/manageAllUsers.php" class="hover:font-bold underline">Ajout d'utilisateurs</a>
-    </div>
+
     <div class="flex flex-col justify-center mx-6 items-center">
       <a class="text-black hover:font-semibold hover:underline" href="manageBook.php">Livres</a>
     </div>
-    <div class="flex flex-col justify-center mx-6 items-center">
-      <a class="text-black hover:font-semibold hover:underline" href="manageAdmins.php">Admins</a>
-    </div>
-    <div class="flex flex-col justify-center mx-6 items-center">
-      <a class="text-black hover:font-semibold hover:underline" href="manageLibrarians.php">Libraires</a>
-    </div>
-    <div class="flex flex-col justify-center mx-6 items-center">
-      <a class="text-black hover:font-semibold hover:underline" href="manageUsers.php">Utilisateurs</a>
-    </div>
+
     <div class="flex justify-end items-center w-full mx-6">
       <div class="flex flex-col">
         <p class="font-thin">Bonjour, <?php echo $_SESSION['admin_username']; ?></p>
@@ -133,7 +126,9 @@ $etats = array_unique(array_column($query_etat, "etat"));
                   <?php endforeach; ?>
                 </select>
               </td>
-              <td><input class="border-2 BORDER-black" type="text" name="etat_livre" value="<?= $product["etat_livre"] ?>" required></td>
+              <td>
+                <input class="border-2 BORDER-black" type="text" name="etat_livre" value="<?= $product["etat_livre"] ?>" required>
+              </td>
               <td>
                 <input type="hidden" name="id_livre" value="<?= $product["id_livre"] ?>">
                 <button class="border-black border-2 m-1 hover:bg-black transition:2s hover:text-white animate-fade" type="submit">Modifier</button>

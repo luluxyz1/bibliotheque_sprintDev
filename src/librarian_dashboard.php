@@ -33,7 +33,7 @@ if (!isset($_SESSION["librarian_username"])) {
     }
     ?>
 
-    <form action="includes/librarian/logout.inc.php" method="post">
+    <form action="includes/logout.inc.php" method="post">
         <button type="submit">Se déconnecter</button>
     </form>
 </body>

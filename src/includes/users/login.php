@@ -1,7 +1,7 @@
 <?php
 require_once "../config_session.inc.php";
-require_once "../users/signup_view.inc.php";
-require_once "../users/login_view.inc.php";
+require_once "signup_view.inc.php";
+require_once "login_view.inc.php";
 
 
 ?>
@@ -11,13 +11,13 @@ require_once "../users/login_view.inc.php";
 
 <head>
     <meta charset="UTF-8">
-    <title>Connexion</title>
+    <title>Connexion utilisateur - Bibliothèque</title>
     <link href="../../output.css" rel="stylesheet">
     <link src="output.js" rel="script">
 </head>
 
-<body>
-    <div>
+<body class="flex h-screen w-screen">
+    <div class="flex flex-col w-96 h-full bg-blue-200">
         <h1 class="text-4xl"> Bibliothèque </h1><br>
         <h1 class="text-2xl"> Connexion </h1>
 
@@ -34,9 +34,11 @@ require_once "../users/login_view.inc.php";
             <a href="../admin/admin_login.php">Connexion administrateur</a>
 
 
-            <?php check_login_errors(); ?>
+            <?php //check_login_errors(); 
+            ?>
         </div>
     </div>
+
 </body>
 <script src="output.js"></script>
 

@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         require_once "dbh.inc.php";
 
 
-
         $query = "DELETE FROM librarian WHERE id_bibliothecaire = ?";
         $stmt = $pdo->prepare($query);
         $stmt->execute([$id_bibliothecaire]);

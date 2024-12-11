@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             ];
             $_SESSION["signup_data"] = $signupData;
 
-            header("Location:../../admin_dashboard/manageLibrarians.php?signup_librarian=error1");
+            header("Location:../../admin_dashboard/manageAllUsers.php?signup_librarian=error1");
             die();
         }
 
@@ -54,11 +54,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $pdo = null;
         $stmt = null;
 
-        header("Location:../../admin_dashboard/manageLibrarians.php?signup=success");
+        header("Location:../../admin_dashboard/manageAllUsers.php?signup=success");
     } catch (PDOException $e) {
         die("Query failed: " . $e->getMessage());
     }
 } else {
-    header("Location:../../admin_dashboard/manageLibrarians.php?signup_librarian=error2");
+    header("Location:../../admin_dashboard/manageAllUsers.php?signup_librarian=error2");
     die();
 }

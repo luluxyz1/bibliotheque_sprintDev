@@ -22,6 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute([$titre, $auteur, $annee, $tome, $genre, $etat, $id]);
 
 
+
+
         $pdo = null;
         $stmt = null;
 
